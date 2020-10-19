@@ -28,6 +28,14 @@ namespace Depot.Data.Repository
                 .FirstOrDefaultAsync(e => e.Id == estoqueId);
         }
 
+        public async Task<Estoque> ObterEstoqueEndereco (int estoqueId)
+        {
+            return await Db.Estoques.AsNoTracking()
+                .Include(e => e.Endereco)
+                .FirstOrDefaultAsync(e => e.Id == estoqueId);
+
+        }
+
         public Task<IEnumerable<Estoque>> ObterEstoquePorRegiao(string pRegiao)
         {
             throw new NotImplementedException();

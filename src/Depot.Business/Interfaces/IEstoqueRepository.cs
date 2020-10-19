@@ -14,6 +14,8 @@ namespace Depot.Business.Interfaces
 
         Task<Estoque> ObterEstoquePorId(int estoqueId);
 
+        Task<Estoque> ObterEstoqueEndereco(int estoqueId);
+
 
     }
 }

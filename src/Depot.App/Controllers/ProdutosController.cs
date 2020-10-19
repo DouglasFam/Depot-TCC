@@ -5,6 +5,7 @@ using Depot.App.ViewModels;
 using Depot.Business.Interfaces;
 using AutoMapper;
 using Depot.Business.Models;
+using System;
 
 namespace Depot.App.Controllers
 {
@@ -61,6 +62,8 @@ namespace Depot.App.Controllers
             produtoViewModel = await PopularFornecedores(produtoViewModel);
 
             if (!ModelState.IsValid) return View(produtoViewModel);
+
+            produtoViewModel.DataCadastro = DateTime.Now;
 
             await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 

@@ -29,7 +29,7 @@ namespace Depot.App.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var estoqueViewModel = await ObterEstoque(id);
+            var estoqueViewModel = await ObterEstoqueEndereco(id);
 
             if (estoqueViewModel == null)
             {
@@ -116,6 +116,10 @@ namespace Depot.App.Controllers
         private async Task<EstoqueViewModel> ObterEstoque(int id)
         {
             return _mapper.Map<EstoqueViewModel>(await _estoqueRepository.ObterEstoquePorId(id));
+        }
+        private async Task<EstoqueViewModel> ObterEstoqueEndereco(int id)
+        {
+            return _mapper.Map<EstoqueViewModel>(await _estoqueRepository.ObterEstoqueEndereco(id));
         }
 
         private async Task<EstoqueViewModel>ObterEstoqueProduto(int id)
