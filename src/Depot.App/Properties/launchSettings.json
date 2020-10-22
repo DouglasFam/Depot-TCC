@@ -15,6 +15,22 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+
+    "Homolog": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Homolog"
+      }
+    },
+    "Prod": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
+
     "Depot.App": {
       "commandName": "Project",
       "launchBrowser": true,
