@@ -1,4 +1,7 @@
 ﻿using Depot.Business.Interfaces;
+using Depot.Business.Interfaces.Services;
+using Depot.Business.Notifications;
+using Depot.Business.Services;
 using Depot.Data.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -12,6 +15,7 @@ namespace Depot.App.Configurations
     {
         public static IServiceCollection ResolveDependencies(this IServiceCollection services) 
         {
+            //Repository
             services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IEstoqueRepository, EstoqueRepository>();
@@ -21,6 +25,12 @@ namespace Depot.App.Configurations
             services.AddScoped<IPerfilRepository, PerfilRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
+            //Services
+            services.AddScoped<IColaboradorService, ColaboradorService>();
+            services.AddScoped<IProdutoService, ProdutoService>();
+
+            //Config
+            services.AddScoped<INotificador, Notificador>();
             return services;
 
         }

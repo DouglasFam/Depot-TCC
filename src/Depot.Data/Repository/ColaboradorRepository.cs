@@ -4,6 +4,7 @@ using Depot.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace Depot.Data.Repository
             //    .Include(e => e.Estoque)
             //    .Include(g => g.GrupoProduto)
             //    .OrderBy(p => p.Nome).ToListAsync();
-        }
+        }       
 
         public async Task<Colaborador> ObterPerfilColaborador(int id)
         {

@@ -1,8 +1,10 @@
 ﻿using Depot.Business.Interfaces;
 using Depot.Business.Interfaces.Services;
 using Depot.Business.Models;
+using Depot.Business.Models.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,27 +14,33 @@ namespace Depot.Business.Services
     {
         private readonly IColaboradorRepository _colaboradorRepository;
 
-        public ColaboradorService(IColaboradorRepository colaboradorRepository)
+        public ColaboradorService(IColaboradorRepository colaboradorRepository,
+                                   INotificador notificador) : base(notificador)
         {
             _colaboradorRepository = colaboradorRepository;
         }
-        public Task Adicionar(Colaborador colaborador)
+        public async Task Adicionar(Colaborador colaborador)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new ColaboradorValidation(), colaborador)) return;
+
+            await _colaboradorRepository.Adicionar(colaborador);
         }
 
-        public Task Atualizar(Colaborador colaborador)
+        public async Task Atualizar(Colaborador colaborador)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new ColaboradorValidation(), colaborador)) return;
+
+            await _colaboradorRepository.Atualizar(colaborador);
         }
 
         public async Task AutenticaUsuario(Colaborador colaborador)
         {
-
             try
             {
-
-                var Colaboradores = await _colaboradorRepository.ObterColaboradores();
+                if(_colaboradorRepository.Buscar(c => c.Login == colaborador.Login && c.Senha == colaborador.Senha).Result.Any())
+                {
+                
+                }
 
                
             }

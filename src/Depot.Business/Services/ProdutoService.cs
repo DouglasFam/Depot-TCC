@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace Depot.Business.Services
 {
-    class ProdutoService : BaseService, IProdutoService
+  public class ProdutoService : BaseService, IProdutoService
     {
         private readonly IProdutoRepository _produtoRepository;
 
-        public ProdutoService(IProdutoRepository produtoRepository)
+        public ProdutoService(IProdutoRepository produtoRepository,
+                              INotificador notificador) : base(notificador)
         {
             _produtoRepository = produtoRepository;
         }

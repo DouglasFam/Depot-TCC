@@ -9,7 +9,6 @@ namespace Depot.Business.Interfaces
    public interface IColaboradorRepository : IRepository<Colaborador>
     {
         Task<IEnumerable<Colaborador>> ObterColaboradores();
-
         Task<Colaborador> ObterPerfilColaborador(int id);
 
         Task<Colaborador> ObterPerfilColaboradorHistorico(int id);
