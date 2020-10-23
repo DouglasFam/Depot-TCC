@@ -20,14 +20,7 @@ namespace Depot.App.Configurations
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/login";
-                    options.AccessDeniedPath = "/acesso-negado";
-                });
-
+     
 
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseMySql(
