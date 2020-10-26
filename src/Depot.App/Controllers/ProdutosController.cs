@@ -21,7 +21,8 @@ namespace Depot.App.Controllers
                                   IFornecedorRepository fornecedorRepository,
                                   IEstoqueRepository estoqueRepotisory,
                                   IGrupoProdutoRepository grupoProdutoRepository,
-                                  IMapper mapper)
+                                  IMapper mapper,
+                                  INotificador notificador) : base(notificador)
         {
             _produtoRepository = produtoRepository;
             _fornecedorRepository = fornecedorRepository;

@@ -21,7 +21,8 @@ namespace Depot.App.Controllers
 
         public HistoricosController(IHistoricoRepository historicoRepository,
                                    IColaboradorRepository colaboradorRepository,
-                                   IMapper mapper)
+                                   IMapper mapper,
+                                   INotificador notificador) : base(notificador)
         {
             _historicoRepository = historicoRepository;
             _colaboradorRepository = colaboradorRepository;

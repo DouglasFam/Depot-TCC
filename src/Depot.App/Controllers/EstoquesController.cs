@@ -16,7 +16,8 @@ namespace Depot.App.Controllers
         private readonly IMapper _mapper;
 
         public EstoquesController(IEstoqueRepository estoqueRepository,
-                                  IMapper mapper)
+                                  IMapper mapper,
+                                  INotificador notificador) : base(notificador)
         {
             _estoqueRepository = estoqueRepository;
             _mapper = mapper;

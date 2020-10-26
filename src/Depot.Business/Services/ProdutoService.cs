@@ -1,6 +1,7 @@
 ﻿using Depot.Business.Interfaces;
 using Depot.Business.Interfaces.Services;
 using Depot.Business.Models;
+using Depot.Business.Models.Validations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,11 +21,15 @@ namespace Depot.Business.Services
 
         public async Task Adicionar(Produto produto)
         {
+            if (!ExecutarValidacao(new ProdutoValidation(), produto)) return;
+
             await _produtoRepository.Adicionar(produto);
         }
 
         public async Task Atualizar(Produto produto)
         {
+            if (!ExecutarValidacao(new ProdutoValidation(), produto)) return;
+
             await _produtoRepository.Atualizar(produto);
         }
 
@@ -35,7 +40,7 @@ namespace Depot.Business.Services
 
         public void Dispose()
         {
-            _produtoRepository.Dispose();
+            _produtoRepository?.Dispose();
         }
     }
 }

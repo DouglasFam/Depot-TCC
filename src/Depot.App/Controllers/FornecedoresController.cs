@@ -5,26 +5,36 @@ using Depot.App.ViewModels;
 using Depot.Business.Interfaces;
 using AutoMapper;
 using Depot.Business.Models;
+using Depot.Business.Interfaces.Services;
 
 namespace Depot.App.Controllers
 {
     public class FornecedoresController : BaseController
     {
         private readonly IFornecedorRepository _fornecedorRepository;
+        private readonly IEnderecoRepository _enderecoRepository;
+        private readonly IFornecedorService _fornecedorService;
         private readonly IMapper _mapper;
 
         public FornecedoresController(IFornecedorRepository fornecedorRepository,
-                                      IMapper mapper)
+                                      IFornecedorService fornecedorService,
+                                      IEnderecoRepository enderecoRepository,
+                                      IMapper mapper,
+                                      INotificador notificador) : base(notificador)
         {
             _fornecedorRepository = fornecedorRepository;
+            _fornecedorService = fornecedorService;
+            _enderecoRepository = enderecoRepository;
             _mapper = mapper;
         }
 
+        [Route("lista-de-fornecedores")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos()));
         }
 
+        [Route("dados-do-fornecedor/{id:int}")]
         public async Task<IActionResult> Details(int id)
         {
 
@@ -38,25 +48,30 @@ namespace Depot.App.Controllers
             return View(fornecedorViewModel);
         }
 
+        [Route("novo-fornecedor")]
         public IActionResult Create()
         {
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("novo-fornecedor")]
         public async Task<IActionResult> Create(FornecedorViewModel fornecedorViewModel)
         {
             if (!ModelState.IsValid) return View(fornecedorViewModel);
 
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            await _fornecedorRepository.Adicionar(fornecedor);
+            await _fornecedorService.Adicionar(fornecedor);
+
+            if (!OperacaoValida()) return View(fornecedorViewModel);
 
             return RedirectToAction("Index");
 
 
         }
-
+        [Route("editar-fornecedor/{id:int}")]
         public async Task<IActionResult> Edit(int id)
         {
 
@@ -72,6 +87,7 @@ namespace Depot.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("editar-fornecedor/{id:int}")]
         public async Task<IActionResult> Edit(int id, FornecedorViewModel fornecedorViewModel)
         {
             if (id != fornecedorViewModel.Id) return NotFound();
@@ -80,14 +96,16 @@ namespace Depot.App.Controllers
 
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
 
-            await _fornecedorRepository.Atualizar(fornecedor);
+            await _fornecedorService.Atualizar(fornecedor);
+
+            if (!OperacaoValida()) return View(await ObterFornecedorProdutosEndereco(id));
 
             return RedirectToAction("Index");
 
 
 
         }
-
+        [Route("excluir-fornecedor/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
 
@@ -103,13 +121,20 @@ namespace Depot.App.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("excluir-fornecedor/{id:int}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var fornecedorViewModel = await ObterFornecedorEndereco(id);
 
             if (fornecedorViewModel == null) return NotFound();
 
-            await _fornecedorRepository.Remover(id);
+            var idEndereco = fornecedorViewModel.Endereco.FornecedorId;
+
+            await _enderecoRepository.Remover(idEndereco.Value);
+
+            await _fornecedorService.Remover(id);
+
+            if (!OperacaoValida()) return View(fornecedorViewModel);
 
             return RedirectToAction("Index");
         }

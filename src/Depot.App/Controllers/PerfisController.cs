@@ -22,7 +22,8 @@ namespace Depot.App.Controllers
 
         public PerfisController(IPerfilRepository perfilRepository,
                                  IColaboradorRepository colaboradorRepository,
-                                 IMapper mapper)
+                                 IMapper mapper,
+                                 INotificador notificador) : base(notificador)
         {
             _perfilRepository = perfilRepository;
             _colaboradorRepository = colaboradorRepository;

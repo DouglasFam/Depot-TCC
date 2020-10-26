@@ -28,6 +28,8 @@ namespace Depot.App.Configurations
             //Services
             services.AddScoped<IColaboradorService, ColaboradorService>();
             services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IFornecedorService, FornecedorService>();
+         
 
             //Config
             services.AddScoped<INotificador, Notificador>();

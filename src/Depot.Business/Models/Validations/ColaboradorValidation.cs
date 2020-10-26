@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Depot.Business.Models.Validation
+namespace Depot.Business.Models.Validations
 {
     public class ColaboradorValidation : AbstractValidator<Colaborador>
     {

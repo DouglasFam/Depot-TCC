@@ -19,7 +19,8 @@ namespace Depot.App.Controllers
         private readonly IMapper _mapper;
 
         public GrupoProdutosController(IGrupoProdutoRepository grupoProdutoRepository,
-                                        IMapper mapper)
+                                        IMapper mapper,
+                                        INotificador notificador) : base(notificador)
         {
             _grupoProdutoRepository = grupoProdutoRepository;
             _mapper = mapper;

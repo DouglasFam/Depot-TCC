@@ -1,7 +1,7 @@
 ﻿using Depot.Business.Interfaces;
 using Depot.Business.Interfaces.Services;
 using Depot.Business.Models;
-using Depot.Business.Models.Validation;
+using Depot.Business.Models.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

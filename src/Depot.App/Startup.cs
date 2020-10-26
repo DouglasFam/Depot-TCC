@@ -45,8 +45,12 @@ namespace Depot.App
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddMvcConfiguration();
+
             services.ResolveDependencies();
-            services.AddMvc();
+
+            services.AddScoped<DepotContext>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +63,7 @@ namespace Depot.App
             }
             else
             {
-                app.UseExceptionHandler("/Home/500");
+                app.UseExceptionHandler("/erro/500");
                 app.UseStatusCodePagesWithRedirects("/erro/{0}");
                app.UseHsts();
             }
