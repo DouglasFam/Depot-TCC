@@ -64,7 +64,7 @@ namespace Depot.App.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var colaboradorViewModel = await ObterPerfilColaboradorHistorico(id);
-
+           
             if (colaboradorViewModel == null)
             {
                 return NotFound();

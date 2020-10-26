@@ -10,6 +10,8 @@ namespace Depot.Business.Interfaces.Services
     {
         Task Adicionar(Fornecedor fornecedor);
         Task Atualizar(Fornecedor fornecedor);
+        Task AtualizarEndereco(Endereco endereco);
+        Task RemoverEndereco(int id);
         Task Remover(int id);
 
     }

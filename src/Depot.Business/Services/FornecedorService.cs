@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Depot.Business.Services
@@ -34,7 +35,9 @@ namespace Depot.Business.Services
                 Notificar("Já existe um fornecedor com este documento informado.");
                 return;
             }
+            var novoDocumento = RemoverCaracteres(fornecedor.Documento);
 
+            fornecedor.Documento = await novoDocumento;
             await _fornecedorRepository.Adicionar(fornecedor);
         }
 
@@ -58,6 +61,11 @@ namespace Depot.Business.Services
             await _enderecoRepository.Atualizar(endereco);
         }
 
+        public async Task RemoverEndereco(int id)
+        {
+            await _enderecoRepository.Remover(id);
+        }
+
         public async Task Remover(int id)
         {
             if (_fornecedorRepository.ObterFornecedorProdutosEndereco(id).Result.Produtos.Any())
@@ -74,6 +82,17 @@ namespace Depot.Business.Services
             _fornecedorRepository?.Dispose();
             _enderecoRepository?.Dispose();
         }
+
+        private async Task<string> RemoverCaracteres(string doc)
+        {
+            string pattern = @"(?i)[^0-9a-záéíóúàèìòùâêîôûãõç\s]";
+            string replacement = "";
+            Regex rgx = new Regex(pattern);
+            string result = rgx.Replace(doc, replacement);
+
+            return result;
+        }
+        
        
     }
 }

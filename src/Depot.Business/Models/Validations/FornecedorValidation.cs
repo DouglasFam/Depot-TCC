@@ -15,10 +15,10 @@ namespace Depot.Business.Models.Validations
                 .Length(2, 100)
                 .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
 
-            RuleFor(f => f.Documento.Length).Equal(CnpjValidacao.TamanhoCnpj)
-                .WithMessage("O Campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}. ");
-            RuleFor(f => CnpjValidacao.Validar(f.Documento)).Equal(true)
-            .WithMessage("O documento fornecodo é inválido");
+            //RuleFor(f => f.Documento.Length).Equal(CnpjValidacao.TamanhoCnpj)
+            //    .WithMessage("O Campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}. ");
+            //RuleFor(f => CnpjValidacao.Validar(f.Documento)).Equal(true)
+            //.WithMessage("O documento fornecodo é inválido");
 
 
 
