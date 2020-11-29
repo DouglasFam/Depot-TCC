@@ -6,10 +6,7 @@ namespace Depot.Business.Models
 {
     public class Endereco : Entity
     {
-        public int? FornecedorId { get; set; }
-
-        public int? EstoqueId { get; set; }
-
+     
         public string Logradouro { get; set; }
 
         public string Numero { get; set; }
@@ -24,10 +21,10 @@ namespace Depot.Business.Models
 
         public string Estado { get; set; }
 
-        /*EF Relation */
+        /*EF RELATIONS */
 
         public Fornecedor Fornecedor { get; set; }
-
         public Estoque Estoque { get; set; }
+
     }
 }

@@ -8,14 +8,14 @@ namespace Depot.Business.Interfaces
 {
    public interface IProdutoRepository : IRepository<Produto>
     {
-        Task<IEnumerable<Produto>> ObterProdutosPorFornecedor(int fornecedorId);
+        IEnumerable<Produto> ObterProdutosPorFornecedor(int fornecedorId);
 
-        Task<IEnumerable<Produto>> ObterProdutosPorEstoque(int EstoqueId);
+        Task<Produto> ObterProdutosCompleto(int id);
 
-        Task<IEnumerable<Produto>> ObterProdutosPorGrupo(int GrupoID);
+        IEnumerable<Produto> ObterProdutosPorEstoque(int EstoqueId);
+
+        IEnumerable<Produto> ObterProdutosPorGrupo(int GrupoID);
 
         Task<IEnumerable<Produto>> ObterProdutosFornecedores();
-
-        Task<Produto> ObterProdutoFornecedor(int id);
     }
 }

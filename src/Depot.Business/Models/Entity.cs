@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Depot.Business.Models
+﻿namespace Depot.Business.Models
 {
     public abstract class Entity
     {

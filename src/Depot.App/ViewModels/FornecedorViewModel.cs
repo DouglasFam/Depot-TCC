@@ -19,9 +19,7 @@ namespace Depot.App.ViewModels
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(18, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 11)]
-        public string Documento { get; set; }
-
-        public EnderecoViewModel Endereco { get; set; }
+        public string CNPJ { get; set; }
 
         [DisplayName("Ativo?")]
         public bool Ativo { get; set; }
@@ -29,5 +27,9 @@ namespace Depot.App.ViewModels
         /* EF Relations */
         [NotMapped]
         public IEnumerable<ProdutoViewModel> Produtos { get; set; }
+
+        public EnderecoViewModel Endereco { get; set; }
+
+        public int EnderecoId { get; set; }
     }
 }

@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Depot.App.ViewModels
 {
@@ -29,6 +26,8 @@ namespace Depot.App.ViewModels
         [DisplayName("Ativo?")]
         public bool Ativo { get; set; }
 
+        public int Quantidade { get; set; }
+
         /*FK */
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -47,19 +46,20 @@ namespace Depot.App.ViewModels
         public int GrupoId { get; set; }
 
         /*EF Relations */
-        public FornecedorViewModel Fornecedor { get; set; }
-
-        public IEnumerable<FornecedorViewModel> Fornecedores { get; set; }
-
-       [NotMapped]
-        public EstoqueViewModel Estoque { get; set; }
-    [NotMapped]
-        public IEnumerable<EstoqueViewModel> Estoques { get; set; }
-       [NotMapped]
-        public GrupoProdutoViewModel GrupoProduto { get; set; }
-       [NotMapped]
-        public IEnumerable<GrupoProdutoViewModel> GrupoProdutos { get; set; }
         [NotMapped]
-        public IEnumerable<HistoricoProdutoViewModel> HistoricoProduto { get; set; }
+        public FornecedorViewModel Fornecedor { get; set; }
+        [NotMapped]
+        public List<FornecedorViewModel> Fornecedores { get; set; }
+
+        [NotMapped]
+        public EstoqueViewModel Estoque { get; set; }
+        [NotMapped]
+        public List<EstoqueViewModel> Estoques { get; set; }
+        [NotMapped]
+        public GrupoViewModel Grupo { get; set; }
+        [NotMapped]
+        public List<GrupoViewModel> Grupos { get; set; }
+        [NotMapped]
+        public List<HistoricoProdutoViewModel> HistoricoProduto { get; set; }
     }
 }

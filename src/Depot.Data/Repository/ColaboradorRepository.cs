@@ -13,6 +13,16 @@ namespace Depot.Data.Repository
     public class ColaboradorRepository : Repository<Colaborador>, IColaboradorRepository
     {
         public ColaboradorRepository(DepotContext context) : base(context) { }
+
+        public  Task<Colaborador> AutenticarColaborador(string email, string senha)
+        {
+            return  Db.Colaboradores
+                 .Include(p => p.Perfil)
+                 .Where(p => p.Email == email
+                        && p.Senha == senha)
+                 .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Colaborador>> ObterColaboradores()
         {
             //return await ObterTodos();
@@ -37,7 +47,7 @@ namespace Depot.Data.Repository
         public async Task<Colaborador> ObterPerfilColaboradorHistorico(int id)
         {
             return await Db.Colaboradores.AsNoTracking()
-                .Include(h => h.Historicos)
+                .Include(hp => hp.HistoricoProdutos)
                 .Include(p => p.Perfil)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }

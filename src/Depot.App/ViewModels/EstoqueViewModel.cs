@@ -15,22 +15,22 @@ namespace Depot.App.ViewModels
         public int Id { get; set; }    
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-        public string NomeEstoque { get; set; }
+        [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
+        public string Nome { get; set; }
 
         [ScaffoldColumn(false)]
         public DateTime DataCadastro { get; set; }
-
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [StringLength(2, ErrorMessage = "O campo {0} precisa ter {1} caracteres", MinimumLength = 2)]
-        public string Regiao { get; set; }
-
+ 
         [DisplayName("Ativo?")]
         public bool Ativo { get; set; }
 
         /* EF RELATIONS */
 
-        public EnderecoViewModel Enderecos { get; set; }
+        public EnderecoViewModel Endereco { get; set; }
+
+        [HiddenInput]
+        public int EnderecoId { get; set; }
+
         [NotMapped]
         public IEnumerable<ProdutoViewModel> Produtos { get; set; }
     }

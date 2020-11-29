@@ -6,26 +6,30 @@
 
 <h1>@ViewData["Title"]</h1>
 <hr />
-<p>
+@*<p>
     <a class="btn btn-info" asp-action="Create">Novo Produto</a>
-</p>
+</p>*@
 <table class="table table-hover">
     <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
-            </th>         
-            <th>
-                @Html.DisplayNameFor(model => model.Ativo)
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.GrupoProduto.Grupo)
+                @Html.DisplayNameFor(model => model.Grupo.Nome)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Fornecedor)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Estoque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataCadastro)
             </th>
             <th></th>
         </tr>
@@ -35,24 +39,28 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
-            </td>         
-            <td>
-                @Html.DisplayFor(modelItem => item.Ativo)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.GrupoProduto.Grupo)
+                @Html.DisplayFor(modelItem => item.Grupo.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Estoque.NomeEstoque)
+                @Html.DisplayFor(modelItem => item.Estoque.Nome)
             </td>
             <td>
-             
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a> |
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+                @Html.DisplayFor(modelItem => item.Quantidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCadastro)
+            </td>
+            <td>
+
+                <a class="btn btn-warning" asp-action="Edit" id="btnteste" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+                <a class="btn btn-danger" asp-action="BaixaProduto" asp-route-id="@item.Id"><spam class="fa fa-sign-out-alt"></spam></a>
             </td>
         </tr>
 }

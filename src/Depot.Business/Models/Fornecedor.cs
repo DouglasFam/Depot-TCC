@@ -7,16 +7,16 @@ namespace Depot.Business.Models
 {
     public class Fornecedor : Entity
     {
+        public int EnderecoId { get; set; }
         public string Nome { get; set; }
 
-        public string Documento { get; set; }      
-
-        public Endereco Endereco { get; set; }
+        public string CNPJ { get; set; }      
 
         [DisplayName("Ativo?")]
         public bool Ativo { get; set; }
 
         /* EF Relations */
+        public Endereco Endereco { get; set; }
         public IEnumerable<Produto> Produtos { get; set; }
 
     }

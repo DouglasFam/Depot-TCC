@@ -17,15 +17,30 @@ namespace Depot.Data.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("Depot.Business.Models.Acao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("acoes");
+                });
+
             modelBuilder.Entity("Depot.Business.Models.Colaborador", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Login")
+                    b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(8)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -35,6 +50,7 @@ namespace Depot.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Senha")
+                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
@@ -42,7 +58,7 @@ namespace Depot.Data.Migrations
                     b.HasIndex("PerfilId")
                         .IsUnique();
 
-                    b.ToTable("Colaboradores");
+                    b.ToTable("colaboradores");
                 });
 
             modelBuilder.Entity("Depot.Business.Models.Endereco", b =>
@@ -52,6 +68,7 @@ namespace Depot.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Bairro")
+                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("Cep")
@@ -59,6 +76,7 @@ namespace Depot.Data.Migrations
                         .HasColumnType("varchar(8)");
 
                     b.Property<string>("Cidade")
+                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("Complemento")
@@ -66,12 +84,6 @@ namespace Depot.Data.Migrations
 
                     b.Property<string>("Estado")
                         .HasColumnType("varchar(100)");
-
-                    b.Property<int?>("EstoqueId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FornecedorId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
@@ -83,13 +95,7 @@ namespace Depot.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstoqueId")
-                        .IsUnique();
-
-                    b.HasIndex("FornecedorId")
-                        .IsUnique();
-
-                    b.ToTable("Enderecos");
+                    b.ToTable("enderecos");
                 });
 
             modelBuilder.Entity("Depot.Business.Models.Estoque", b =>
@@ -104,17 +110,19 @@ namespace Depot.Data.Migrations
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("NomeEstoque")
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("Regiao")
-                        .IsRequired()
-                        .HasColumnType("varchar(2)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Estoques");
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
+
+                    b.ToTable("estoques");
                 });
 
             modelBuilder.Entity("Depot.Business.Models.Fornecedor", b =>
@@ -126,9 +134,12 @@ namespace Depot.Data.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Documento")
+                    b.Property<string>("CNPJ")
                         .IsRequired()
                         .HasColumnType("varchar(14)");
+
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -136,53 +147,25 @@ namespace Depot.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fornecedores");
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
+
+                    b.ToTable("fornecedores");
                 });
 
-            modelBuilder.Entity("Depot.Business.Models.GrupoProduto", b =>
+            modelBuilder.Entity("Depot.Business.Models.Grupo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Grupo")
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(200)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Grupos");
-                });
-
-            modelBuilder.Entity("Depot.Business.Models.Historico", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("AutorizadorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ColaboradorId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DataMovimento")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("DepositanteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RetiranteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TipoMovimento")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColaboradorId");
-
-                    b.ToTable("Historicos");
+                    b.ToTable("grupos");
                 });
 
             modelBuilder.Entity("Depot.Business.Models.HistoricoProduto", b =>
@@ -191,19 +174,50 @@ namespace Depot.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("HistoricoId")
+                    b.Property<int>("AcaoId")
                         .HasColumnType("int");
+
+                    b.Property<ulong>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ColaboradorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("EstoqueId")
+                        .HasColumnType("Int");
+
+                    b.Property<int>("FornecedorId")
+                        .HasColumnType("Int");
+
+                    b.Property<int>("GrupoId")
+                        .HasColumnType("Int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("Int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("HistoricoId");
+                    b.HasIndex("AcaoId");
+
+                    b.HasIndex("ColaboradorId");
 
                     b.HasIndex("ProdutoId");
 
-                    b.ToTable("HistoricoProdutos");
+                    b.ToTable("historicoprodutos");
                 });
 
             modelBuilder.Entity("Depot.Business.Models.Perfil", b =>
@@ -212,13 +226,13 @@ namespace Depot.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("NomePerfil")
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Perfis");
+                    b.ToTable("perfis");
                 });
 
             modelBuilder.Entity("Depot.Business.Models.Produto", b =>
@@ -235,7 +249,7 @@ namespace Depot.Data.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(1000)");
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("EstoqueId")
                         .HasColumnType("int");
@@ -250,6 +264,9 @@ namespace Depot.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(200)");
 
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EstoqueId");
@@ -258,7 +275,7 @@ namespace Depot.Data.Migrations
 
                     b.HasIndex("GrupoId");
 
-                    b.ToTable("Produtos");
+                    b.ToTable("produtos");
                 });
 
             modelBuilder.Entity("Depot.Business.Models.Colaborador", b =>
@@ -269,30 +286,32 @@ namespace Depot.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Depot.Business.Models.Endereco", b =>
+            modelBuilder.Entity("Depot.Business.Models.Estoque", b =>
                 {
-                    b.HasOne("Depot.Business.Models.Estoque", "Estoque")
-                        .WithOne("Endereco")
-                        .HasForeignKey("Depot.Business.Models.Endereco", "EstoqueId");
-
-                    b.HasOne("Depot.Business.Models.Fornecedor", "Fornecedor")
-                        .WithOne("Endereco")
-                        .HasForeignKey("Depot.Business.Models.Endereco", "FornecedorId");
+                    b.HasOne("Depot.Business.Models.Endereco", "Endereco")
+                        .WithOne("Estoque")
+                        .HasForeignKey("Depot.Business.Models.Estoque", "EnderecoId")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Depot.Business.Models.Historico", b =>
+            modelBuilder.Entity("Depot.Business.Models.Fornecedor", b =>
                 {
-                    b.HasOne("Depot.Business.Models.Colaborador", "Colaborador")
-                        .WithMany("Historicos")
-                        .HasForeignKey("ColaboradorId")
+                    b.HasOne("Depot.Business.Models.Endereco", "Endereco")
+                        .WithOne("Fornecedor")
+                        .HasForeignKey("Depot.Business.Models.Fornecedor", "EnderecoId")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Depot.Business.Models.HistoricoProduto", b =>
                 {
-                    b.HasOne("Depot.Business.Models.Historico", "Historico")
-                        .WithMany("HistoricoProduto")
-                        .HasForeignKey("HistoricoId")
+                    b.HasOne("Depot.Business.Models.Acao", "Acao")
+                        .WithMany("HistoricoProdutos")
+                        .HasForeignKey("AcaoId")
+                        .IsRequired();
+
+                    b.HasOne("Depot.Business.Models.Colaborador", "Colaborador")
+                        .WithMany("HistoricoProdutos")
+                        .HasForeignKey("ColaboradorId")
                         .IsRequired();
 
                     b.HasOne("Depot.Business.Models.Produto", "Produto")
@@ -313,7 +332,7 @@ namespace Depot.Data.Migrations
                         .HasForeignKey("FornecedorId")
                         .IsRequired();
 
-                    b.HasOne("Depot.Business.Models.GrupoProduto", "GrupoProduto")
+                    b.HasOne("Depot.Business.Models.Grupo", "Grupo")
                         .WithMany("Produtos")
                         .HasForeignKey("GrupoId")
                         .IsRequired();

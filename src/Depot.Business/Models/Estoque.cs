@@ -5,18 +5,14 @@ using System.Text;
 namespace Depot.Business.Models
 {
     public class Estoque : Entity
-    {    
-        public string NomeEstoque { get; set; }
-
+    {
+        public int EnderecoId { get; set; }
+        public string Nome { get; set; }
         public DateTime DataCadastro { get; set; }
-
-        public string Regiao { get; set; }
-
         public bool Ativo { get; set; }
 
-        public Endereco Endereco { get; set; }
-
         /* EF RELATIONS */
+        public Endereco Endereco { get; set; }
         public IEnumerable<Produto> Produtos { get; set; }
     }
 }

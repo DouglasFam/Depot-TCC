@@ -14,25 +14,21 @@ namespace Depot.Data.Mappings
             .IsRequired()
             .HasColumnType("varchar(200)");
 
-            builder.Property(p => p.Documento)
+            builder.Property(p => p.CNPJ)
                 .IsRequired()
                 .HasColumnType("varchar(14)");
 
-
             // 1 : 1 => Fornecedor : Endereco
             builder.HasOne(f => f.Endereco)
-                 .WithOne(e => e.Fornecedor)
-                 .HasForeignKey<Endereco>(f => f.FornecedorId);
-                 
-                 
-
+                 .WithOne(e => e.Fornecedor);
+                                
             // 1 : N => Fornecedor : Produtos
             builder.HasMany(f => f.Produtos)
                 .WithOne(p => p.Fornecedor)
                 .HasForeignKey(p => p.FornecedorId);
 
 
-            builder.ToTable("Fornecedores");
+            builder.ToTable("fornecedores");
         }
     }
 }

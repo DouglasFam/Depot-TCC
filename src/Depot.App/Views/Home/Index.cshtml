@@ -1,8 +1,9 @@
-﻿
+﻿@model Depot.App.ViewModels.ColaboradorViewModel
 @{
     ViewData["Title"] = "Depot Sonda";
 }
 <br />
 <div>
-    <h3>Página inicial da aplicação</h3>
+    <h3>Bem vindo ao Depot!  @Html.DisplayFor(model => model.Nome)</h3>
+
 </div>

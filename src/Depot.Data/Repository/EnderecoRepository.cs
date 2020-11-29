@@ -19,7 +19,9 @@ namespace Depot.Data.Repository
         public async Task<Endereco> ObterEndrecoPorFornecedor(int fornecedorId)
         {
             return await Db.Enderecos.AsNoTracking()
-                .FirstOrDefaultAsync(f => f.FornecedorId == fornecedorId);
+                            .Include(e => e.Fornecedor)
+                            .ThenInclude(f => f.Endereco)
+                            .FirstOrDefaultAsync(e => e.Id == fornecedorId);
         }
     }
 }

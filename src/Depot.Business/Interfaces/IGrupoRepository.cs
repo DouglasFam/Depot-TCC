@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Depot.Business.Interfaces
 {
-  public  interface IGrupoProdutoRepository : IRepository<GrupoProduto>
+  public interface IGrupoRepository : IRepository<Grupo>
     {
-        Task<IEnumerable<GrupoProduto>> ObterGruposProdutos();
+        Task<IEnumerable<Grupo>> ObterTodosGrupos();
+        Task<IEnumerable<Grupo>> ObterProdutosPorGrupo(int id);
     }
 }

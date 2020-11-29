@@ -6,30 +6,20 @@ namespace Depot.Business.Models
 {
     public class Produto : Entity
     {
-        public int FornecedorId { get; set; }
-
         public int EstoqueId { get; set; }
-
         public int GrupoId { get; set; }
-
+        public int FornecedorId { get; set; }    
         public string Nome { get; set; }
-
-
         public string Descricao { get; set; }
-
-
         public DateTime DataCadastro { get; set; }
-
-
         public bool Ativo { get; set; }
+        public int Quantidade { get; set; }
+
 
         /*EF Relations */
-        public Fornecedor Fornecedor { get; set; }
-
         public Estoque Estoque { get; set; }
-
-        public GrupoProduto GrupoProduto { get; set; }
-
-        public IEnumerable<HistoricoProduto> HistoricoProduto { get; set; }
+        public Grupo Grupo { get; set; }
+        public Fornecedor Fornecedor { get; set; }
+        public IList<HistoricoProduto> HistoricoProduto { get; set; }
     }
 }

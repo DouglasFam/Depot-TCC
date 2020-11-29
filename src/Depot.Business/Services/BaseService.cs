@@ -24,7 +24,7 @@ namespace Depot.Business.Services
 
         protected void Notificar(string mensagem)
         {
-            //imprime o erro na camada de apresentação
+            _notificador.Handle(new Notifications.Notificacao(mensagem));
 
         }
 

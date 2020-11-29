@@ -10,7 +10,7 @@ namespace Depot.Business.Interfaces
     {
         Task<IEnumerable<Estoque>> ObterEstoquePorRegiao(string pRegiao);
 
-        Task<Estoque> ObterEstoquePorProduto(int produtoId);
+        Task<Estoque> ObterEstoqueProduto(int produtoId);
 
         Task<Estoque> ObterEstoquePorId(int estoqueId);
 

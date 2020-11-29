@@ -6,9 +6,8 @@ namespace Depot.Business.Models
 {
     public class Perfil : Entity
     {
-        public string NomePerfil { get; set; }
+        public string Nome { get; set; }
 
-        //public IEnumerable<Colaborador> Colaboradores { get; set; }
         public Colaborador Colaborador { get; set; }
 
     }

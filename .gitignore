@@ -343,3 +343,5 @@ healthchecksdb
 /src/Depot.App/Migrations/20201022132621_Initial.cs
 /src/Depot.App/Migrations/20201022132621_Initial.Designer.cs
 /src/Depot.App/Migrations/ApplicationDbContextModelSnapshot.cs
+/src/Depot.App/wwwroot/css/bootstrap-multiselect.css
+/src/Depot.App/wwwroot/js/bootstrap-multiselect.js

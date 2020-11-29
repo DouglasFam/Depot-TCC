@@ -1,54 +1,65 @@
 ﻿@model Depot.App.ViewModels.ProdutoViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>ProdutoViewModel</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Descricao)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Descricao)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Ativo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Ativo)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.GrupoId)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GrupoId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Grupo.Nome)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fornecedor)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fornecedor.Nome)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fornecedor.Documento)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fornecedor.CNPJ)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estoque)
+        <dt class="col-sm-2">
+            <label asp-for="Estoque" class="control-label"></label>
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estoque.NomeEstoque)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Estoque.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            <label asp-for="Quantidade" class="control-label"></label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Quantidade)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+   
+    <div class="form-group row">     
+        <div class="col-md-4">
+            <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> 
+            <a class="btn btn-dark" asp-action="Index">Voltar</a>
+        </div>
+    </div>
+
 </div>

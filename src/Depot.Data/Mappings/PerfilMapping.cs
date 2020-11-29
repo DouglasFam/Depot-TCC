@@ -11,7 +11,7 @@ namespace Depot.Data.Mappings
         {
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.NomePerfil)
+            builder.Property(p => p.Nome)
               .IsRequired()
               .HasColumnType("varchar(100)");
 
@@ -20,7 +20,7 @@ namespace Depot.Data.Mappings
 
            
 
-            builder.ToTable("Perfis");
+            builder.ToTable("perfis");
         }
     }
 }

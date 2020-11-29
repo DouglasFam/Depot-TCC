@@ -12,11 +12,11 @@ namespace Depot.App.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-        }
-        
-      
-      
+
+        }     
+        public DbSet<Depot.App.ViewModels.AcaoViewModel> AcaoViewModel { get; set; }
+        public DbSet<Depot.App.ViewModels.HistoricoProdutoViewModel> HistoricoProdutoViewModel { get; set; }
        
-       
+
     }
 }

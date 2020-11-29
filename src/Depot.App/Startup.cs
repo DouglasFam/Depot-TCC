@@ -47,6 +47,10 @@ namespace Depot.App
 
             services.AddMvcConfiguration();
 
+            services.AddMvc();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.ResolveDependencies();
 
             services.AddScoped<DepotContext>();
@@ -71,7 +75,7 @@ namespace Depot.App
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             
             app.UseAuthentication();
             app.UseAuthorization();

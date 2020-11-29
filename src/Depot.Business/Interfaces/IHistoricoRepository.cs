@@ -6,17 +6,12 @@ using System.Threading.Tasks;
 
 namespace Depot.Business.Interfaces
 {
-   public interface IHistoricoRepository : IRepository<Historico>
+   public interface IHistoricoRepository : IRepository<HistoricoProduto>
     {
-        Task<IEnumerable<Historico>> ObterHistorico(int HistoricoId);
-        Task<IEnumerable<Historico>> ObterHistoricoProduto(int ProdutoId);
-
-        Task<IEnumerable<Historico>> ObterHistoricoDepositador(int DepositanteId);
-
-        Task<IEnumerable<Historico>> ObterHistoricoRetirante(int RetiranteId);
-
-        Task<IEnumerable<Historico>> ObterHistoricoAutorizador(int AutorizadorId);
-
-        Task<IEnumerable<Historico>> ObterHistoricoProdutoColaborador();
+        Task<IEnumerable<HistoricoProduto>> ObterHistorico(int HistoricoId);
+        Task<IEnumerable<HistoricoProduto>> ObterHistoricoProduto(int ProdutoId);
+        Task<IEnumerable<HistoricoProduto>> ObterHistoricoDepositador(int DepositanteId);
+        Task<IEnumerable<HistoricoProduto>> ObterHistoricoRetirante(int RetiranteId);
+        Task<IEnumerable<HistoricoProduto>> ObterHistoricoProdutoColaborador();
     }
 }

@@ -10,23 +10,17 @@ namespace Depot.Data.Mappings
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.NomeEstoque)
+            builder.Property(e => e.Nome)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
-            builder.Property(e => e.Regiao)
-                .IsRequired()
-                .HasColumnType("varchar(2)");
-
-            builder.HasOne(e => e.Endereco)
-                .WithOne(k => k.Estoque)
-                .HasForeignKey<Endereco>(e => e.EstoqueId);
-           
+                      
+            // 1 : N => Estoque : Produtos
             builder.HasMany(e => e.Produtos)
                 .WithOne(p => p.Estoque)
                 .HasForeignKey(p => p.EstoqueId);
 
-            builder.ToTable("Estoques");
+            builder.ToTable("estoques");
 
         }
     }

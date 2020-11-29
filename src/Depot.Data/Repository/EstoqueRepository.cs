@@ -15,16 +15,24 @@ namespace Depot.Data.Repository
         {
 
         }
-        public async Task<Estoque> ObterEstoquePorProduto(int produtoId)
+        public async Task<Estoque> ObterEstoqueProduto(int produtoId)
         {
             return await Db.Estoques.AsNoTracking()
                 .Include(p => p.Produtos)
+                .Include(p => p.Endereco)
                 .FirstOrDefaultAsync(p => p.Id == produtoId);
-        }
+
+            
+                //return await Db.Fornecedores.AsNoTracking()
+                //     .Include(c => c.Produtos)
+                //     .Include(c => c.Endereco)
+                //     .FirstOrDefaultAsync(c => c.Id == id);
+            }
 
         public async Task<Estoque> ObterEstoquePorId(int estoqueId)
         {
             return await Db.Estoques.AsNoTracking()
+                .Include(e => e.Endereco)
                 .FirstOrDefaultAsync(e => e.Id == estoqueId);
         }
 

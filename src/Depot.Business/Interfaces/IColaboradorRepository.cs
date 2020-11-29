@@ -1,6 +1,7 @@
 ﻿using Depot.Business.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,8 @@ namespace Depot.Business.Interfaces
     {
         Task<IEnumerable<Colaborador>> ObterColaboradores();
         Task<Colaborador> ObterPerfilColaborador(int id);
+
+        Task<Colaborador> AutenticarColaborador(string email, string senha);
 
         Task<Colaborador> ObterPerfilColaboradorHistorico(int id);
     }

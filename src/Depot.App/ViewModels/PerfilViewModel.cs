@@ -14,7 +14,7 @@ namespace Depot.App.ViewModels
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-        public string NomePerfil { get; set; }
+        public string Nome { get; set; }
 
         [NotMapped]
         public IEnumerable<ColaboradorViewModel> Colaboradores { get; set; }

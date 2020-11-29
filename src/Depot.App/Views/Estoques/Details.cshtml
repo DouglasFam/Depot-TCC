@@ -1,36 +1,52 @@
 ﻿@model Depot.App.ViewModels.EstoqueViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do Estoque";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
-<div>
-    <h4>EstoqueViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeEstoque)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NomeEstoque)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Regiao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Regiao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ativo)
-        </dd>
-    </dl>
+<hr />
+<form enctype="multipart/form-data" asp-action="Edit">
+    <vc:summary></vc:summary>
+
+    <input type="hidden" name="idFor" asp-for="Id" />
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Nome" class="control-label"></label>
+            <input asp-for="Nome" readonly class="form-control" />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model.Id">Editar</a>
+        <a class="btn btn-info" href="javascript:window.history.back();">Voltar</a>
+    </div>
+</form>
+<div id="EnderecoTarget">
+    <partial name="_DetalhesEndereco" />
 </div>
+@*<h4>Produtos</h4>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <partial name="../Produtos/_ListaProdutos" model="@Model.Produtos" />
+</div>*@
+
+<div id="myModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
 </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            AjaxModal();
+        });
+     
+    </script>
+}

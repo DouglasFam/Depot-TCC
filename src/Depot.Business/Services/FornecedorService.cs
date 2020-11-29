@@ -16,6 +16,7 @@ namespace Depot.Business.Services
 
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IEnderecoRepository _enderecoRepository;
+      
 
         public FornecedorService(IFornecedorRepository fornecedorRepository,
                                 IEnderecoRepository enderecoRepository,
@@ -30,26 +31,71 @@ namespace Depot.Business.Services
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)
                  || !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return;
 
-            if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
+            if (_fornecedorRepository.Buscar(f => f.CNPJ == fornecedor.CNPJ).Any())
             {
                 Notificar("Já existe um fornecedor com este documento informado.");
                 return;
             }
-            var novoDocumento = RemoverCaracteres(fornecedor.Documento);
+            var novoDocumento = RemoverCaracteres(fornecedor.CNPJ);
+            fornecedor.CNPJ = await novoDocumento;
 
-            fornecedor.Documento = await novoDocumento;
-            await _fornecedorRepository.Adicionar(fornecedor);
+             
+            Endereco insertEndereco = new Endereco();
+            Fornecedor insertFornecedor = new Fornecedor();
+
+            try
+            {  
+                //ENDERECO
+                insertEndereco.Cep = fornecedor.Endereco.Cep;
+                insertEndereco.Cidade = fornecedor.Endereco.Cidade;
+                insertEndereco.Bairro = fornecedor.Endereco.Bairro;
+                insertEndereco.Numero = fornecedor.Endereco.Numero;
+                insertEndereco.Complemento = fornecedor.Endereco.Complemento;
+                insertEndereco.Estado = fornecedor.Endereco.Estado;
+                insertEndereco.Logradouro = fornecedor.Endereco.Logradouro;
+
+                await _enderecoRepository.Adicionar(insertEndereco);
+
+
+                //FORNECEDOR
+                insertFornecedor.Nome = fornecedor.Nome;
+                insertFornecedor.CNPJ = fornecedor.CNPJ;
+                insertFornecedor.Ativo = fornecedor.Ativo;
+                insertFornecedor.EnderecoId = insertEndereco.Id;
+
+                await _fornecedorRepository.Adicionar(insertFornecedor);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            //if (_fornecedorRepository.Buscar(f => f.CNPJ == fornecedor.CNPJ).Result.Any())
+
+               
         }
 
         public async Task Atualizar(Fornecedor fornecedor)
         {
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return;
 
-            if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento && f.Id != fornecedor.Id).Result.Any())
+            if (_fornecedorRepository.Buscar(f => f.CNPJ == fornecedor.CNPJ && f.Id != fornecedor.Id).Any())
             {
                 Notificar("Já existe um fornecedor com este documento informado.");
                 return;
             }
+
+            var novoDocumento = RemoverCaracteres(fornecedor.CNPJ);
+            fornecedor.CNPJ = await novoDocumento;
+
+            //Fornecedor UpdateFornecedor = new Fornecedor();
+            ////FORNECEDOR
+            //UpdateFornecedor.Nome = fornecedor.Nome;
+            //UpdateFornecedor.CNPJ = fornecedor.CNPJ;
+            //UpdateFornecedor.Ativo = fornecedor.Ativo;
+          
 
             await _fornecedorRepository.Atualizar(fornecedor);
         }
@@ -58,7 +104,19 @@ namespace Depot.Business.Services
         {
             if (!ExecutarValidacao(new EnderecoValidation(), endereco)) return;
 
-            await _enderecoRepository.Atualizar(endereco);
+            Endereco UpdateEndereco = new Endereco();
+
+            //ENDERECO
+            UpdateEndereco.Id = endereco.Id;
+            UpdateEndereco.Cep = endereco.Cep;
+            UpdateEndereco.Cidade = endereco.Cidade;
+            UpdateEndereco.Bairro = endereco.Bairro;
+            UpdateEndereco.Numero = endereco.Numero;
+            UpdateEndereco.Complemento = endereco.Complemento;
+            UpdateEndereco.Estado = endereco.Estado;
+            UpdateEndereco.Logradouro = endereco.Logradouro;
+
+            await _enderecoRepository.Atualizar(UpdateEndereco);
         }
 
         public async Task RemoverEndereco(int id)

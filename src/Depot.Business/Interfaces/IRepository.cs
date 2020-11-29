@@ -1,6 +1,7 @@
 ﻿using Depot.Business.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace Depot.Business.Interfaces
 
         Task Remover(int id);
 
-        Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> Buscar(Expression<Func<TEntity, bool>> predicate);
 
         Task<int> SaveChanges();
 

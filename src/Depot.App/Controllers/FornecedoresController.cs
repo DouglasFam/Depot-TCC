@@ -6,6 +6,9 @@ using Depot.Business.Interfaces;
 using AutoMapper;
 using Depot.Business.Models;
 using Depot.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
 
 namespace Depot.App.Controllers
 {
@@ -37,6 +40,14 @@ namespace Depot.App.Controllers
         [Route("dados-do-fornecedor/{id:int}")]
         public async Task<IActionResult> Details(int id)
         {
+            var verificaPerfil = JsonConvert.DeserializeObject<Colaborador>(HttpContext.Session.GetString("SessionColaborador"));
+
+            if (verificaPerfil.PerfilId != 1 && verificaPerfil.PerfilId != 2)
+            {
+
+                Notificar("Seu perfil não tem autorização");
+                throw new Exception("Seu perfil não tem autorização");
+            }
 
             var fornecedorViewModel = await ObterFornecedorEndereco(id);
 
@@ -60,6 +71,15 @@ namespace Depot.App.Controllers
         [Route("novo-fornecedor")]
         public async Task<IActionResult> Create(FornecedorViewModel fornecedorViewModel)
         {
+            var verificaPerfil = JsonConvert.DeserializeObject<Colaborador>(HttpContext.Session.GetString("SessionColaborador"));
+
+            if (verificaPerfil.PerfilId != 1 && verificaPerfil.PerfilId != 2)
+            {
+
+                Notificar("Seu perfil não tem autorização");
+                throw new Exception("Seu perfil não tem autorização");
+            }
+
             if (!ModelState.IsValid) return View(fornecedorViewModel);
 
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
@@ -74,6 +94,14 @@ namespace Depot.App.Controllers
         [Route("editar-fornecedor/{id:int}")]
         public async Task<IActionResult> Edit(int id)
         {
+            var verificaPerfil = JsonConvert.DeserializeObject<Colaborador>(HttpContext.Session.GetString("SessionColaborador"));
+
+            if (verificaPerfil.PerfilId != 1 && verificaPerfil.PerfilId != 2)
+            {
+
+                Notificar("Seu perfil não tem autorização");
+                throw new Exception("Seu perfil não tem autorização");
+            }
 
             var fornecedorViewModel = await ObterFornecedorProdutosEndereco(id);
 
@@ -81,7 +109,7 @@ namespace Depot.App.Controllers
             {
                 return NotFound();
             }
-
+         
             return View(fornecedorViewModel);
         }
 
@@ -108,6 +136,14 @@ namespace Depot.App.Controllers
         [Route("excluir-fornecedor/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var verificaPerfil = JsonConvert.DeserializeObject<Colaborador>(HttpContext.Session.GetString("SessionColaborador"));
+
+            if (verificaPerfil.PerfilId != 1)
+            {
+
+                Notificar("Seu perfil não tem autorização");
+                throw new Exception("Seu perfil não tem autorização");
+            }
 
             var fornecedorViewModel = await ObterFornecedorEndereco(id);
 
@@ -151,7 +187,7 @@ namespace Depot.App.Controllers
             }
 
             return PartialView("_DetalhesEndereco", fornecedor);
-           
+
         }
 
         [Route("atualizar-endereco-fornecedor/{id:int}")]
@@ -173,14 +209,14 @@ namespace Depot.App.Controllers
         public async Task<IActionResult> AtualizarEndereco(FornecedorViewModel fornecedorViewModel)
         {
             ModelState.Remove("Nome");
-            ModelState.Remove("Documento");
+            ModelState.Remove("CNPJ");
             if (!ModelState.IsValid) return PartialView("_AtualizarEndereco", fornecedorViewModel);
 
             await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(fornecedorViewModel.Endereco));
 
             if (!OperacaoValida()) return PartialView("_AtualizarEndereco", fornecedorViewModel);
 
-            var url = Url.Action("ObterEndereco", "Fornecedores", new { id = fornecedorViewModel.Endereco.FornecedorId });
+            var url = Url.Action("ObterEndereco", "Fornecedores", new { id = fornecedorViewModel.Id});
 
             return Json(new { success = true, url });
         }

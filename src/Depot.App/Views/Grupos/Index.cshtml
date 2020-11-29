@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Depot.App.ViewModels.GrupoViewModel>
+
+@{
+    ViewData["Title"] = "Lista Grupos";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<p>
+    <a class="btn btn-info" asp-action="Create">Adicionar Grupo</a>
+</p>
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+               
+            </tr>
+        }
+    </tbody>
+</table>

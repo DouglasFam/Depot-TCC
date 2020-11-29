@@ -9,7 +9,7 @@ namespace Depot.Business.Models.Validations
     {
         public ColaboradorValidation()
         {
-            RuleFor(c => c.Login)
+            RuleFor(c => c.Email)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser preenchido")
                 .Length(2, 100)
                 .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");

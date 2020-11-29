@@ -7,19 +7,25 @@ using Depot.App.ViewModels;
 using Depot.Business.Interfaces;
 using AutoMapper;
 using Depot.Business.Models;
+using Depot.Business.Interfaces.Services;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace Depot.App.Controllers
 {
     public class EstoquesController : BaseController
     {
         private readonly IEstoqueRepository _estoqueRepository;
+        private readonly IEstoqueService _estoqueService;
         private readonly IMapper _mapper;
 
         public EstoquesController(IEstoqueRepository estoqueRepository,
+                                  IEstoqueService estoqueService,
                                   IMapper mapper,
                                   INotificador notificador) : base(notificador)
         {
             _estoqueRepository = estoqueRepository;
+            _estoqueService = estoqueService;
             _mapper = mapper;
         }
 
@@ -42,6 +48,7 @@ namespace Depot.App.Controllers
 
         public IActionResult Create()
         {
+
             return View();
         }
 
@@ -49,11 +56,22 @@ namespace Depot.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(EstoqueViewModel estoqueViewModel)
         {
+            var verificaPerfil = JsonConvert.DeserializeObject<Colaborador>(HttpContext.Session.GetString("SessionColaborador"));
+
+            if (verificaPerfil.PerfilId != 1 && verificaPerfil.PerfilId != 2)
+            {
+
+                Notificar("Seu perfil não tem autorização");
+                throw new Exception("Seu perfil não tem autorização");
+            }
+
             if (!ModelState.IsValid) return View(estoqueViewModel);
 
             estoqueViewModel.DataCadastro = DateTime.Now;
 
-            await _estoqueRepository.Adicionar(_mapper.Map<Estoque>(estoqueViewModel));
+            await _estoqueService.Adicionar(_mapper.Map<Estoque>(estoqueViewModel));
+
+            //await _estoqueRepository.Adicionar(_mapper.Map<Estoque>(estoqueViewModel));
 
             return RedirectToAction("Index");
 
@@ -61,6 +79,15 @@ namespace Depot.App.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
+            var verificaPerfil = JsonConvert.DeserializeObject<Colaborador>(HttpContext.Session.GetString("SessionColaborador"));
+
+            if (verificaPerfil.PerfilId != 1 && verificaPerfil.PerfilId != 2)
+            {
+
+                Notificar("Seu perfil não tem autorização");
+                throw new Exception("Seu perfil não tem autorização");
+            }
+
             var estoqueViewModel = await ObterEstoque(id);
 
             if (estoqueViewModel == null)
@@ -89,6 +116,14 @@ namespace Depot.App.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+            var verificaPerfil = JsonConvert.DeserializeObject<Colaborador>(HttpContext.Session.GetString("SessionColaborador"));
+
+            if (verificaPerfil.PerfilId != 1)
+            {
+
+                Notificar("Seu perfil não tem autorização");
+                throw new Exception("Seu perfil não tem autorização");
+            }
 
             var estoque = await ObterEstoque(id);
 
@@ -113,6 +148,44 @@ namespace Depot.App.Controllers
 
             return RedirectToAction("Index");
         }   
+
+        [Route("obter-endereco-estoque/{id:int}")]
+        public async Task<IActionResult> ObterEndereco(int id)
+        {
+            var estoque = await ObterEstoque(id);
+
+            if (estoque == null) return NotFound();
+
+            return PartialView("_DetalhesEndereco", estoque);
+        }
+
+        [Route("atualizar-endereco-estoque/{id:int}")]
+        public async Task<IActionResult> AtualizarEnderecoEstoque(int id)
+        {
+            var estoque = await ObterEstoqueEndereco(id);
+
+            if (estoque == null) return NotFound();
+
+            return PartialView("_AtualizarEndereco", new EstoqueViewModel { Endereco = estoque.Endereco });
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("atualizar-endereco-estoque/{id:int}")]
+        public async Task<IActionResult> AtualizarEnderecoEstoque(EstoqueViewModel estoqueViewModel)
+        {
+            ModelState.Remove("Nome");
+
+            if (!ModelState.IsValid) return PartialView("_AtualizarEndereco", estoqueViewModel);
+
+            await _estoqueService.AtualizarEndereco(_mapper.Map<Endereco>(estoqueViewModel.Endereco));
+
+            if (!OperacaoValida()) return PartialView("_AtualizarEndereco", estoqueViewModel);
+
+            var url = Url.Action("ObterEndereco", "Estoques", new { id = estoqueViewModel.Id });
+
+            return Json(new { success = true, url });
+        }
         
         private async Task<EstoqueViewModel> ObterEstoque(int id)
         {
@@ -125,7 +198,7 @@ namespace Depot.App.Controllers
 
         private async Task<EstoqueViewModel>ObterEstoqueProduto(int id)
         {
-            return _mapper.Map<EstoqueViewModel>(await _estoqueRepository.ObterEstoquePorProduto(id));
+            return _mapper.Map<EstoqueViewModel>(await _estoqueRepository.ObterEstoqueProduto(id));
         }
     }
 }

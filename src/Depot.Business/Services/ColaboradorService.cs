@@ -30,35 +30,46 @@ namespace Depot.Business.Services
         {
             if (!ExecutarValidacao(new ColaboradorValidation(), colaborador)) return;
 
+
+
             await _colaboradorRepository.Atualizar(colaborador);
         }
 
-        public async Task AutenticaUsuario(Colaborador colaborador)
+        public async Task<int> AutenticaUsuario(string email, string senha)
         {
+         
             try
             {
-                if(_colaboradorRepository.Buscar(c => c.Login == colaborador.Login && c.Senha == colaborador.Senha).Result.Any())
+                if(_colaboradorRepository.Buscar(c => c.Email != email && c.Senha != senha).Any())
                 {
-                
+                    Notificar("Login não econtrado!");
+                    
                 }
 
-               
+                Colaborador AutenticaCol = new Colaborador();
+
+                AutenticaCol = await _colaboradorRepository.AutenticarColaborador(email, senha);
+
+
+                return AutenticaCol.Id;
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _colaboradorRepository?.Dispose();
         }
 
-        public Task Remover(int id)
+        public async Task Remover(int id)
         {
-            throw new NotImplementedException();
+         await  _colaboradorRepository.Remover(id);
+         
         }
     }
 }

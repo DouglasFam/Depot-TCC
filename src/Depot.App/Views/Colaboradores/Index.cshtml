@@ -16,11 +16,11 @@
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Login)
+                @Html.DisplayNameFor(model => model.Email)
             </th>
           
             <th>
-                @Html.DisplayNameFor(model => model.Perfil.NomePerfil)
+                @Html.DisplayNameFor(model => model.Perfil.Nome)
             </th>
             <th></th>
         </tr>
@@ -32,15 +32,15 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Login)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
            
             <td>
-                @Html.DisplayFor(modelItem => item.Perfil.NomePerfil)
+                @Html.DisplayFor(modelItem => item.Perfil.Nome)
             </td>
             <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a> |
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a> |
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a> 
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a> 
                 <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
             </td>
         </tr>

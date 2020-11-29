@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Depot.Data.Repository
 {
-    public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, new()
+    public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
         protected readonly DepotContext Db;
         protected readonly DbSet<TEntity> DbSet;
@@ -21,9 +21,9 @@ namespace Depot.Data.Repository
             DbSet = db.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> Buscar(Expression<Func<TEntity, bool>> predicate)
         {
-            return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
+            return DbSet.AsNoTracking().Where(predicate);
         }
 
         public virtual async Task<TEntity> ObterPorId(int id)
@@ -44,14 +44,19 @@ namespace Depot.Data.Repository
 
         public virtual async Task Atualizar(TEntity entity)
         {
+            
             DbSet.Update(entity);
             await SaveChanges();
         }
 
         public async Task Remover(int id)
         {
-            DbSet.Remove(new TEntity { Id = id });
-            await SaveChanges();
+            var entity = await ObterPorId(id);
+            if (entity != null)
+            {
+                DbSet.Remove(entity);
+                await SaveChanges();
+            }
         }
 
         public async Task<int> SaveChanges()

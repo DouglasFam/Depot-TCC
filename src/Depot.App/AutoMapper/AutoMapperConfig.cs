@@ -16,12 +16,11 @@ namespace Depot.App.AutoMapper
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
             CreateMap<Estoque, EstoqueViewModel>().ReverseMap();
             CreateMap<Fornecedor, FornecedorViewModel>().ReverseMap();
-            CreateMap<GrupoProduto, GrupoProdutoViewModel>().ReverseMap();
+            CreateMap<Grupo, GrupoViewModel>().ReverseMap();
             CreateMap<HistoricoProduto, HistoricoProdutoViewModel>().ReverseMap();
-            CreateMap<Historico, HistoricoViewModel>().ReverseMap();
+            CreateMap<Acao, AcaoViewModel>().ReverseMap();
             CreateMap<Perfil, PerfilViewModel>().ReverseMap();
             CreateMap<Produto, ProdutoViewModel>().ReverseMap();
-
         }
     }
 }

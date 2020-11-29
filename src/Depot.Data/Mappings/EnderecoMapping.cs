@@ -22,7 +22,26 @@ namespace Depot.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(8)");
 
-            builder.ToTable("Enderecos");
+            builder.Property(c => c.Bairro)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+            builder.Property(c => c.Cidade)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+
+
+            // 1 : 1 => Endereco : Estoque
+            builder.HasOne(e => e.Estoque)
+               .WithOne(k => k.Endereco)
+                .HasForeignKey<Estoque>(k => k.EnderecoId);
+
+            // 1 : 1 => Endereco : Fornecedor
+            builder.HasOne(e => e.Fornecedor)
+                .WithOne(f => f.Endereco)
+                .HasForeignKey<Fornecedor>(f => f.EnderecoId);
+
+
+            builder.ToTable("enderecos");
 
         }
 

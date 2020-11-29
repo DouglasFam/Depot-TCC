@@ -11,7 +11,8 @@ namespace Depot.Business.Interfaces.Services
         Task Adicionar(Colaborador colaborador);
         Task Atualizar(Colaborador colaborador);
         Task Remover(int id);
-        Task AutenticaUsuario(Colaborador colaborador);
+        
+        Task<int> AutenticaUsuario(string email, string senha);
 
     }
 }

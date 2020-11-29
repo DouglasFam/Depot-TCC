@@ -1,13 +1,12 @@
 ﻿@model Depot.App.ViewModels.ColaboradorViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>ColaboradorViewModel</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -17,26 +16,24 @@
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Login)
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Login)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Senha)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Senha)
+            @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PerfilId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PerfilId)
+            @Html.DisplayFor(model => model.Perfil.Nome)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="form-group row">
+    <div class="col-md-2">
+        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model.Id">Editar</a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-info" asp-action="Index">Voltar</a>
+        </div>
+    </div>

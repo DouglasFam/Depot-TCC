@@ -20,15 +20,17 @@ namespace Depot.App.Configurations
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IEstoqueRepository, EstoqueRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
-            services.AddScoped<IGrupoProdutoRepository, GrupoProdutoRepository>();
-            services.AddScoped<IHistoricoRepository, HistoricoRepository>();
+            services.AddScoped<IGrupoRepository, GrupoRepository>();
+            services.AddScoped<IHistoricoProdutoRepository, HistoricoProdutoRepository>();
             services.AddScoped<IPerfilRepository, PerfilRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IAcaoRepository, AcaoRepository>();
 
             //Services
             services.AddScoped<IColaboradorService, ColaboradorService>();
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IFornecedorService, FornecedorService>();
+            services.AddScoped <IEstoqueService, EstoqueService>();
          
 
             //Config

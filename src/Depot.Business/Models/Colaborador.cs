@@ -9,7 +9,7 @@ namespace Depot.Business.Models
     {
         public string Nome { get; set; }
 
-        public string Login { get; set; }
+        public string Email { get; set; }
 
         public string Senha { get; set; }
 
@@ -20,6 +20,8 @@ namespace Depot.Business.Models
         
         public Perfil Perfil { get; set; }
 
-        public IEnumerable<Historico> Historicos { get; set; }
+     //   public IEnumerable<Perfil> Perfis { get; set; }
+
+        public IEnumerable<HistoricoProduto> HistoricoProdutos { get; set; }
     }
 }

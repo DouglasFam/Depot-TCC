@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Depot.Business.Models
 {
-    public class GrupoProduto : Entity
+    public class Grupo : Entity
     {
-        public string Grupo { get; set; }
+        public string Nome { get; set; }
 
         public IEnumerable<Produto> Produtos { get; set; }
     }

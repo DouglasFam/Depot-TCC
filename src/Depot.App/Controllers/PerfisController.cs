@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Depot.App.Data;
+﻿using AutoMapper;
 using Depot.App.ViewModels;
 using Depot.Business.Interfaces;
-using AutoMapper;
 using Depot.Business.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Depot.App.Controllers
 {
@@ -88,15 +83,14 @@ namespace Depot.App.Controllers
             await _perfilRepository.Atualizar(perfil);
 
             return RedirectToAction("Index");
-            
-           
+                    
         }
 
         public async Task<IActionResult> Delete(int id)
         {
             var perfilViewModel = await _perfilRepository.ObterPorId(id);
 
-              
+             
             if (perfilViewModel == null)
             {
                 return NotFound();
@@ -114,7 +108,6 @@ namespace Depot.App.Controllers
             if (perfilViewModel == null) return NotFound();
 
             await _perfilRepository.Remover(id);
-
            
             return RedirectToAction("Index");
         }

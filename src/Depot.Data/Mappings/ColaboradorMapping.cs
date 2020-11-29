@@ -14,21 +14,21 @@ namespace Depot.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
-            builder.Property(c => c.Login)
+            builder.Property(c => c.Email)
                 .IsRequired()
-                .HasColumnType("varchar(8)");
+                .HasColumnType("varchar(100)");
 
-            // 1 : 1 => Colaborador : Perfil
-            //builder.HasOne(c => c.Perfil)
-            //    .WithOne(p => p.Colaborador);
+            builder.Property(c => c.Senha)
+              .IsRequired()
+              .HasColumnType("varchar(100)");
 
+            //1 : N => Colaboradores : HistoricoProduto
+            builder.HasMany(c => c.HistoricoProdutos)
+                .WithOne(hp => hp.Colaborador)
+                .HasForeignKey(hp => hp.ColaboradorId);
+                
 
-            // 1 : N => Colaborador : Historico
-            builder.HasMany(h => h.Historicos)
-                 .WithOne(c => c.Colaborador)
-                 .HasForeignKey(c => c.ColaboradorId);
-
-            builder.ToTable("Colaboradores");
+            builder.ToTable("colaboradores");
 
         }
     }
